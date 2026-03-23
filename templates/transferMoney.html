@@ -13,6 +13,9 @@
         <form action="/main" method="post">
             <input type="submit" value="Main">
         </form>
+        <p id="view_payer"></p>
+        <p id="view_payee"></p>
+        <p id="view_amount"></p>
         <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
         <script>
             const contractAddress = "0x029Cb70F902d4990A3BdeFCB65285B76dE9cF946";
@@ -76,6 +79,12 @@
 
                 await contract.methods.weixin(payer, payee,amount).send({ from: accounts[0]});
 
+            }
+            async function transaction() {
+                const result = await contract.methods.checkTransaction().call();
+                document.getElementById('view_payer').innerText = "Payer: " + result[0];
+                document.getElementById('view_payee').innerText = "Payee: " + result[1];
+                document.getElementById('view_amount').innerText = "Amount: " + result[2];
             }
         </script>
     </div>
